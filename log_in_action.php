@@ -2,14 +2,14 @@
 <?php
 	session_start();
 
-	$mysqli=new mysqli('localhost:3306','root','rootroot','DBPJ') or die(mysqli_error($mysqli));
+	$mysqli=new mysqli('localhost:3306','root','rootroot','events_calendar') or die(mysqli_error($mysqli));
 
 
 	error_reporting(E_ALL);
 	ini_set("display_errors", 1);
 
 	// Select a database
-	$dbname = "DBPJ";
+	$dbname = "events_calendar";
 	$id = $_POST['id'];
 	$password = $_POST['password'];
 
