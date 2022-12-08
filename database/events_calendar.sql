@@ -2,7 +2,6 @@ DROP DATABASE IF EXISTS events_calendar;
 CREATE DATABASE events_calendar;
 USE events_calendar;
 
--- 1
 CREATE TABLE user(
 	id INT NOT NULL,
     password VARCHAR(55),
@@ -14,8 +13,6 @@ CREATE TABLE user(
     CONSTRAINT PKuser PRIMARY KEY(id)
 );
 
-
--- 2
 CREATE TABLE club( -- clubs and its leader
     id INT NOT NULL,
     name VARCHAR(255),
@@ -33,7 +30,6 @@ CREATE TABLE club_member( -- clubs and its members
     FOREIGN KEY(user_id) REFERENCES user(id)
 );
 
--- 3
 CREATE TABLE location(
     id INT NOT NULL,
     name VARCHAR(255),
@@ -42,7 +38,6 @@ CREATE TABLE location(
     PRIMARY KEY (id)
 );
 
--- 4
 CREATE TABLE event(
     id INT NOT NULL,
     name VARCHAR(255),
@@ -54,7 +49,6 @@ CREATE TABLE event(
     FOREIGN KEY (club_id) REFERENCES club(id)
 );
 
--- 5 
 CREATE TABLE participants( -- user and event
     user_id INT NOT NULL,
     event_id INT NOT NULL,
@@ -63,7 +57,6 @@ CREATE TABLE participants( -- user and event
     FOREIGN KEY (event_id) REFERENCES event(id)
 );
 
--- 6
 CREATE TABLE review(
     id INT NOT NULL,
     event_id INT NOT NULL,
@@ -75,7 +68,6 @@ CREATE TABLE review(
     FOREIGN KEY (author) REFERENCES user(id)
 );
 
--- 7
 CREATE TABLE club_community( -- individual web page of each club
     id INT NOT NULL,
     name TEXT,
@@ -84,7 +76,6 @@ CREATE TABLE club_community( -- individual web page of each club
     PRIMARY KEY(id)
 );
 
--- 8
 CREATE TABLE user_and_community( 
     community_id INT NOT NULL,
     user_id INT NOT NULL,
@@ -93,7 +84,6 @@ CREATE TABLE user_and_community(
     PRIMARY KEY (community_id, user_id)
 );
 
--- 9
 CREATE TABLE post(
     id INT NOT NULL,
     author INT NOT NULL,
@@ -106,7 +96,6 @@ CREATE TABLE post(
     PRIMARY KEY (id)
 );
 
--- 10
 CREATE TABLE host( -- club and event
     club_id INT NOT NULL,
     event_id INT NOT NULL,
