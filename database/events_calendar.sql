@@ -87,7 +87,7 @@ CREATE TABLE user_and_community(
 CREATE TABLE post(
     id INT NOT NULL,
     author INT NOT NULL,
-    community_id INT NOT NULL
+    community_id INT NOT NULL,
     title TEXT,
     content TEXT,
     view INT,
