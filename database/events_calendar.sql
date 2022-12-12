@@ -3,7 +3,7 @@ CREATE DATABASE events_calendar;
 USE events_calendar;
 
 CREATE TABLE user(
-	id INT NOT NULL,
+    id INT NOT NULL,
     password VARCHAR(55),
     full_name VARCHAR(255),
     email VARCHAR(255),
