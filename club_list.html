@@ -9,32 +9,89 @@
 </head>
 
 <body>
+<!-- Club header section -->
   <div class="list-group">
-    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-      <div class="d-flex w-100 justify-content-between">
-        <h5 class="mb-1">Club name</h5>
-        <!-- <small>3 days ago</small> -->
-      </div>
-      <p class="mb-1">Club manager: Manager</p>
-      <p class="mb-1">Club members (3): Member1, Member2, Member3</p>
-    </a>
+    
+<?php
+include_once 'dbconfig.php';
+$dbname = "events_calendar";
+mysqli_select_db($conn, $dbname) or die('DB selection failed');
 
-    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-      <div class="d-flex w-100 justify-content-between">
-        <h5 class="mb-1">Club name</h5>
-        <!-- <small>3 days ago</small> -->
-      </div>
-      <p class="mb-1">Club manager: Manager</p>
-      <p class="mb-1">Club members (3): Member1, Member2, Member3</p>
-    </a>
+if (mysqli_connect_errno()) {
+  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+  exit();
+}else{
+  // echo "Connection successful!<br>";	
+}
 
-    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-      <div class="d-flex w-100 justify-content-between">
-        <h5 class="mb-1">Club name</h5>
-        <!-- <small>3 days ago</small> -->
-      </div>
-      <p class="mb-1">Club manager: Manager</p>
-      <p class="mb-1">Club members (3): Member1, Member2, Member3</p>
-    </a>
-  </div>
+
+// get club name
+$sql_club_name = "
+	SELECT id, name
+	FROM club
+";
+$result_club_name = $conn->query($sql_club_name);
+$row_club_name = mysqli_fetch_array($result_club_name);
+
+if($result_club_name->num_rows > 0){
+	// output data of each row
+	while($row_club_name = $result_club_name->fetch_assoc()){
+
+	echo '<a href="'.$row_club_name["id"].'" class="list-group-item list-group-item-action flex-column align-items-start">';
+	echo '<div class="d-flex w-100 justify-content-between">';
+	echo '<h5 class="mb-1"><strong>Club name: </strong>' .$row_club_name["name"]. '</h5><br>';
+	echo '</div>';	
+
+	// get club manager using club id
+	$sql_club_manager = "
+		SELECT full_name
+		FROM club
+		JOIN user
+		ON club.manager_id = user.id
+		WHERE club.id =".$row_club_name["id"]."
+	";
+	$result_club_manager = $conn->query($sql_club_manager);
+	$row_club_manager = mysqli_fetch_array($result_club_manager);
+
+	echo '<strong>Club manager: </strong>' .$row_club_manager["full_name"];
+
+
+
+	/* NOT WORKING YET
+	// get members
+
+	echo "<br>";
+	echo "ok1";
+
+	$sql_member = "
+		SELECT full_name
+		FROM club_member
+		JOIN user
+		ON club_member.user_id = user.id
+		WHERE club.id = 1
+	";
+	echo "ok2";
+
+	$result_member = $conn->query($sql_member);
+	echo "ok3";
+
+	$row_member = mysqli_fetch_array($result_member);
+	echo "ok4";
+
+	// echo "<br><strong>Club members (" . $row_count['count_user']-1 . "):</strong> ";
+
+	if($result_member->num_rows > 1){
+		// output data of each row
+		while($row_member = $result_member->fetch_assoc()){
+		echo $row_member["full_name"];
+		}
+	} elseif($result_member->num_rows == 1){
+		echo $row_member["full_name"];
+	} else {
+		echo "0 results";
+	}
+
+	*/
+	}
+}
 </body>
