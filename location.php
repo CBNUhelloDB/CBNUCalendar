@@ -16,7 +16,6 @@
 	  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	</head>
 	<body class="is-preload">
-
 		<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
 	    <a class="navbar-brand" href="#">CBNU Events Calendar</a>
 	    <button class="navbar-toggler" type="button" data-toggle="colla	pse" data-target="#navbarSupportedContent"
@@ -26,10 +25,10 @@
 	    <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	      <ul class="navbar-nav mr-auto">
 	        <li class="nav-item">
-	          <a class="nav-link" href="./index.html">Home <span class="sr-only">(current)</span></a>
+	          <a class="nav-link" href="./index.php">Home <span class="sr-only"></span></a>
 	        </li>
 	        <li class="nav-item">
-	          <a class="nav-link" href="event.php">Event</a>
+	          <a class="nav-link" href="event_list.php">Event</a>
 	        </li>
 	        <li class="nav-item dropdown">
 	          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -37,8 +36,8 @@
 	            Club
 	          </a>
 	          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-	            <a class="dropdown-item" href="./club-list.html">Club list</a>
-	            <a class="dropdown-item" href="#">Create club</a>
+	            <a class="dropdown-item" href="./club_list.php">Club list</a>
+	            <a class="dropdown-item" href="./club_create.php">Create club</a>
 	          </div>
 	        </li>
 	        <li class="nav-item dropdown">
@@ -47,7 +46,7 @@
 	            Community
 	          </a>
 	          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-	            <a class="dropdown-item" href="./my-community.html">My community</a>
+	            <a class="dropdown-item" href="./community_my.php">My community</a>
 	            <a class="dropdown-item" href="#">Create community</a>
 	          </div>
 	        </li>
@@ -57,8 +56,8 @@
 	            My page
 	          </a>
 	          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-	            <a class="dropdown-item" href="#">My profile</a>
-	            <a class="dropdown-item" href="#">My comments</a>
+	            <a class="dropdown-item" href="./mypage_participatedLog">My profile</a>
+	            <a class="dropdown-item" href="./mypage_comment.html">My comments</a>
 	            <a class="dropdown-item" href="#">Logout</a>
 	          </div>
 	        </li>
@@ -85,20 +84,21 @@
 										include_once 'dbconfig.php';
 										$dbname = "events_calendar";
 										mysqli_select_db($conn, $dbname) or die('DB selection failed');
+										$location_id = $_GET["id"];
 										$sql = "
-										SELECT avg(score) a
+										SELECT ROUND(avg(score),1) a
 										FROM review
 										WHERE event_id IN (
 											SELECT id
 											FROM event
-											WHERE location_id = 1)
+											WHERE location_id = $location_id)
 										";
 										$result = $conn->query($sql);
 										
 										$sql2 = "
 										SELECT *
 										FROM location
-										WHERE id = 1
+										WHERE id = $location_id
 										";
 										$result2 = $conn->query($sql2);
 										$row2 = mysqli_fetch_array($result2);
@@ -133,9 +133,10 @@
 										mysqli_select_db($conn, $dbname) or die('DB selection failed');
 										$sql = "
 										SELECT e.name name, e.date date, c.name cname
-										FROM event AS e, club AS c
-										WHERE location_id = 1
-										AND e.club_id = c.id
+										FROM event AS e, club AS c, host AS h
+										WHERE location_id = $location_id
+										AND e.id = h.event_id
+										AND h.club_id = c.id
 										";
 										$result = $conn->query($sql);
 										$row = mysqli_fetch_array($result);
@@ -158,42 +159,29 @@
 										<h2>How about these places?</h2>
 									</header>
 									<div class="features">
-										<article>
-											<a href ="#">
-												<span class="image object"><img src="images/pic06.jpg" alt="" style="width:82px; height:116px;"/></span>
-												<div class="content">
-													<h3>Another Location</h3>
-													<p>this is temp another Location</p>
-												</div>
-											</a>
-										</article>
-										<article>
-											<a href ="#">
-												<span class="image object"><img src="images/pic07.jpg" alt="" style="width:82px; height:116px;"/></span>
-												<div class="content">
-													<h3>Another Location</h3>
-													<p>this is temp another Location</p>
-												</div>
-											</a>
-										</article>
-										<article>
-											<a href ="#">
-												<span class="image object"><img src="images/pic08.jpg" alt="" style="width:82px; height:116px;"/></span>
-												<div class="content">
-													<h3>Another Location</h3>
-													<p>this is temp another Location</p>
-												</div>
-											</a>
-										</article>
-										<article>
-											<a href ="#">
-												<span class="image object"><img src="images/pic09.jpg" alt="" style="width:82px; height:116px;"/></span>
-												<div class="content">
-													<h3>Another Location</h3>
-													<p>this is temp another Location</p>
-												</div>
-											</a>
-										</article>
+										<?php
+										include_once 'dbconfig.php';
+										$dbname = "events_calendar";
+										mysqli_select_db($conn, $dbname) or die('DB selection failed');
+										$sql = "
+										SELECT *
+										FROM location								
+										";
+										$result = $conn->query($sql);
+										while($row = mysqli_fetch_array($result)) {
+											if($location_id != $row["id"]) {
+												echo '<article>';
+												echo '<a href ="#">';
+												echo '<span class="image object"><img src="images/pic06.jpg" alt="" style="width:82px; height:116px;"/></span>';
+												echo '<div class="content">';
+												echo '<h3>'.$row["name"].'</h3>';
+												echo '<p>'.$row["subtitle"].'</p>';
+												echo '</div>';
+												echo '</a>';
+												echo '</article>';
+											}
+										}
+										?>
 									</div>
 								</section>
 

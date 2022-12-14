@@ -9,7 +9,60 @@
 </head>
 
 <body>
-
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+	    <a class="navbar-brand" href="#">CBNU Events Calendar</a>
+	    <button class="navbar-toggler" type="button" data-toggle="colla	pse" data-target="#navbarSupportedContent"
+	      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	      <span class="navbar-toggler-icon"></span>
+	    </button>
+	    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	      <ul class="navbar-nav mr-auto">
+	        <li class="nav-item">
+	          <a class="nav-link" href="./index.php">Home <span class="sr-only"></span></a>
+	        </li>
+	        <li class="nav-item">
+	          <a class="nav-link" href="event_list.php">Event</a>
+	        </li>
+	        <li class="nav-item dropdown">
+	          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+	            aria-haspopup="true" aria-expanded="false">
+	            Club
+	          </a>
+	          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+	            <a class="dropdown-item" href="./club_list.php">Club list</a>
+	            <a class="dropdown-item" href="./club_create.php">Create club</a>
+	          </div>
+	        </li>
+	        <li class="nav-item dropdown active">
+	          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+	            aria-haspopup="true" aria-expanded="false">
+	            Community
+	          </a>
+	          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+	            <a class="dropdown-item" href="./community_my.php">My community</a>
+	            <a class="dropdown-item" href="#">Create community</a>
+	          </div>
+	        </li>
+	        <li class="nav-item dropdown">
+	          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+	            aria-haspopup="true" aria-expanded="false">
+	            My page
+	          </a>
+	          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+	            <a class="dropdown-item" href="./mypage_participatedLog">My profile</a>
+	            <a class="dropdown-item" href="./mypage_comment.html">My comments</a>
+	            <a class="dropdown-item" href="#">Logout</a>
+	          </div>
+	        </li>
+	      </ul>
+	      <!--
+	            <form class="form-inline my-2 my-lg-0">
+	                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+	                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+	            </form>
+	            -->
+	    </div>
+	  </nav>
 <!-- Club header section -->
   <div class="list-group">
     <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
@@ -80,7 +133,7 @@ $sql_member = "
 $result_member = $conn->query($sql_member);
 $row_member = mysqli_fetch_array($result_member);
 
-echo "<strong>Club members (" . $row_count['count_user']-1 . "):</strong> ";
+echo "<strong>Club members (" . $row_count['count_user'] . "):</strong> ";
 if($result_member->num_rows > 0){
 	// output data of each row
 	while($row_member = $result_member->fetch_assoc()){

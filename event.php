@@ -26,10 +26,10 @@
 	    <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	      <ul class="navbar-nav mr-auto">
 	        <li class="nav-item">
-	          <a class="nav-link" href="./index.html">Home <span class="sr-only">(current)</span></a>
+	          <a class="nav-link" href="./index.php">Home <span class="sr-only"></span></a>
 	        </li>
 	        <li class="nav-item active">
-	          <a class="nav-link" href="event.html">Event</a>
+	          <a class="nav-link" href="event_list.php">Event</a>
 	        </li>
 	        <li class="nav-item dropdown">
 	          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -37,8 +37,8 @@
 	            Club
 	          </a>
 	          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-	            <a class="dropdown-item" href="./club-list.html">Club list</a>
-	            <a class="dropdown-item" href="#">Create club</a>
+	            <a class="dropdown-item" href="./club_list.php">Club list</a>
+	            <a class="dropdown-item" href="./club_create.php">Create club</a>
 	          </div>
 	        </li>
 	        <li class="nav-item dropdown">
@@ -47,7 +47,7 @@
 	            Community
 	          </a>
 	          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-	            <a class="dropdown-item" href="./my-community.html">My community</a>
+	            <a class="dropdown-item" href="./community_my.php">My community</a>
 	            <a class="dropdown-item" href="#">Create community</a>
 	          </div>
 	        </li>
@@ -57,8 +57,8 @@
 	            My page
 	          </a>
 	          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-	            <a class="dropdown-item" href="#">My profile</a>
-	            <a class="dropdown-item" href="#">My comments</a>
+	            <a class="dropdown-item" href="./mypage_participatedLog">My profile</a>
+	            <a class="dropdown-item" href="./mypage_comment.html">My comments</a>
 	            <a class="dropdown-item" href="#">Logout</a>
 	          </div>
 	        </li>
@@ -84,28 +84,44 @@
 								<?php
 									include_once 'dbconfig.php';
 									$dbname = "events_calendar";
+									$event_id = $_GET['id'];
 									mysqli_select_db($conn, $dbname) or die('DB selection failed');
-									$sql = " SELECT avg(r.score) avg, e.name name, e.date date, l.name lname, l.capacity cap, c.name cname
-									FROM review AS r, event AS e, location AS l, club as c
-									WHERE e.id = 1
+									$sql = " SELECT avg(r.score) avg, e.name name, e.date date, l.name lname, l.capacity cap, l.id lid
+									FROM review AS r, event AS e, location AS l
+									WHERE e.id = $event_id
 									AND e.id = r.event_id
 									AND e.location_id = l.id
-									AND e.club_id = c.id
+									";
+									$sql2 = " SELECT c.name cname, u.full_name uname, u.email email
+									FROM event AS e, user AS u, club AS c, host AS h
+									WHERE e.id = $event_id
+									AND e.id = h.event_id
+									AND h.club_id = c.id
+									AND c.manager_id = u.id
 									";
 									$result = $conn->query($sql);
+									$result2 = $conn->query($sql2);
+									$result3 = $conn->query($sql2);
 									$row = mysqli_fetch_array($result);
+									$locid = $row["lid"];
 									echo '<header>';
 									echo '<h1>'.$row["name"].'</h1>';
-									echo '<p>'.$row["cname"].'</p>';
+									while($row2 = mysqli_fetch_array($result2)) {
+										echo '<p>'.$row2["cname"].'</p>';
+									}
 									echo '</header>';
-									echo '<p>'.$row["lname"].'<br>';
-									echo 'phone : 010-1111-2222<br>';
-									echo 'Date & time : '.$row["date"].'<br>';
-									echo 'capacity : '.$row["cap"].'</p>';
+									echo '<p>Location : '.$row["lname"].'<br><br>';
+									echo 'Date & time : '.$row["date"].'<br><br>';
+									echo 'capacity : '.$row["cap"].'<br><br>';
+									echo 'Contact Us : <br>';
+									while($row3 = mysqli_fetch_array($result3)) {
+										echo $row3["email"].'<br>';
+									}
+									echo '</p>';
 									echo '<h2>Score : '.$row["avg"].'/5.0</h2>';;
 									?>
 									<ul class="actions">
-										<li><a href="location.php" class="button big">About Location</a></li>
+										<li><a href=<?php echo 'location.php?id='.$locid; ?> class="button big">About Location</a></li>
 										<li><a href="#" class="button big">About Club</a></li>
 									</ul>
 									<ul class="actions">
@@ -121,7 +137,10 @@
 								include_once 'dbconfig.php';
 								$dbname = "events_calendar";
 								mysqli_select_db($conn, $dbname) or die('DB selection failed');
-								$sql = " SELECT name, club_id, date, id FROM event ";
+								$sql = "
+								SELECT name, date, id
+								FROM event
+								";
 								$result = $conn->query($sql);
 							?>
 								<section>
@@ -131,52 +150,32 @@
 									<div class="features">
 										<?php
 										while($row = mysqli_fetch_array($result)) {
-										echo '<article>';
-										echo '<a href ="#">';
-										echo '<span class="image object"><img src="images/pic06.jpg" alt="" style="width:82px; height:116px;"/></span>';
-										echo '<div class="content">';
-										echo '<h3>'.$row["name"].'</h3>';
-										echo '<p>'.$row["club_id"].' / '.$row["date"].'</p>';
-										echo '</div>';
-										echo '</a>';
-										echo '</article>';}
+											$eid = $row["id"];
+											if($eid != $event_id) {
+												echo '<article>';
+												echo '<a href ="#">';
+												echo '<span class="image object"><img src="images/pic06.jpg" alt="" style="width:82px; height:116px;"/></span>';
+												echo '<div class="content">';
+												echo '<h3>'.$row["name"].'</h3>';
+												echo '<p>';
+												$sql2 = "
+												SELECT c.name cname
+												FROM event AS e, host AS h, club AS c
+												WHERE e.id = $eid
+												AND e.id = h.event_id
+												AND h.club_id = c.id
+												";
+												$result2 = $conn->query($sql2);
+												while($row2 = mysqli_fetch_array($result2)) {
+													echo $row2["cname"].'&nbsp&nbsp';
+												}
+												echo ' / &nbsp&nbsp'.$row["date"].'</p>';
+												echo '</div>';
+												echo '</a>';
+												echo '</article>';
+											}	
+										}
 										?>
-										<!-- <article>
-											<a href ="#">
-												<span class="image object"><img src="images/pic06.jpg" alt="" style="width:82px; height:116px;"/></span>
-												<div class="content">
-													<h3>Another Event</h3>
-													<p>this is temp another event</p>
-												</div>
-											</a>
-										</article>
-										<article>
-											<a href ="#">
-												<span class="image object"><img src="images/pic07.jpg" alt="" style="width:82px; height:116px;"/></span>
-												<div class="content">
-													<h3>Another Event</h3>
-													<p>this is temp another event</p>
-												</div>
-											</a>
-										</article>
-										<article>
-											<a href ="#">
-												<span class="image object"><img src="images/pic08.jpg" alt="" style="width:82px; height:116px;"/></span>
-												<div class="content">
-													<h3>Another Event</h3>
-													<p>this is temp another event</p>
-												</div>
-											</a>
-										</article>
-										<article>
-											<a href ="#">
-												<span class="image object"><img src="images/pic09.jpg" alt="" style="width:82px; height:116px;"/></span>
-												<div class="content">
-													<h3>Another Event</h3>
-													<p>this is temp another event</p>
-												</div>
-											</a>
-										</article> -->
 									</div>
 								</section>
 

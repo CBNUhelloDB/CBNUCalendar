@@ -26,10 +26,10 @@
 	    <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	      <ul class="navbar-nav mr-auto">
 	        <li class="nav-item">
-	          <a class="nav-link" href="./index.html">Home <span class="sr-only">(current)</span></a>
+	          <a class="nav-link" href="./index.php">Home <span class="sr-only"></span></a>
 	        </li>
-	        <li class="nav-item">
-	          <a class="nav-link" href="event.php">Event</a>
+	        <li class="nav-item active">
+	          <a class="nav-link" href="event_list.php">Event</a>
 	        </li>
 	        <li class="nav-item dropdown">
 	          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -37,8 +37,8 @@
 	            Club
 	          </a>
 	          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-	            <a class="dropdown-item" href="./club-list.html">Club list</a>
-	            <a class="dropdown-item" href="#">Create club</a>
+	            <a class="dropdown-item" href="./club_list.php">Club list</a>
+	            <a class="dropdown-item" href="./club_create.php">Create club</a>
 	          </div>
 	        </li>
 	        <li class="nav-item dropdown">
@@ -47,7 +47,7 @@
 	            Community
 	          </a>
 	          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-	            <a class="dropdown-item" href="./my-community.html">My community</a>
+	            <a class="dropdown-item" href="./community_my.php">My community</a>
 	            <a class="dropdown-item" href="#">Create community</a>
 	          </div>
 	        </li>
@@ -57,8 +57,8 @@
 	            My page
 	          </a>
 	          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-	            <a class="dropdown-item" href="#">My profile</a>
-	            <a class="dropdown-item" href="#">My comments</a>
+	            <a class="dropdown-item" href="./mypage_participatedLog">My profile</a>
+	            <a class="dropdown-item" href="./mypage_comment.html">My comments</a>
 	            <a class="dropdown-item" href="#">Logout</a>
 	          </div>
 	        </li>
