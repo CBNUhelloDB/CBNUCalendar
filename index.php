@@ -2,6 +2,10 @@
 $mysqli = new mysqli('localhost:3306','root','rootroot','events_calendar') or die(mysqli_error($mysqli));
 error_reporting( E_ALL );
 ini_set( "display_errors", 1 );
+
+$sql = "SELECT id, name, date
+        FROM event";
+$result = $conn->query($sql); 
 ?>
 <!doctype html>
 <html lang="en">
@@ -131,7 +135,6 @@ ini_set( "display_errors", 1 );
           groupId: 777,
           title: 'testEvent',
           start: '2022-12-01',
-          end: '2022-12-07',
           url: 'http://google.com/'
         },
         

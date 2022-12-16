@@ -32,3 +32,16 @@ SELECT id, name, date
 FROM event
 ORDER BY date
 
+5. SELECT CONCAT&COUNT query
+
+SELECT CONCAT(YEAR(event.date),'-',MONTH(event.date)) AS d, Count(*) c
+FROM event.participants
+WHERE id.event = event_id.participants AND YEAR(event.date) = 2022
+GROUP BY d
+
+6. UNION query
+
+SELECT*FROM(
+SELECT content AS content FROM post WHERE id = '$userID' 
+UNION ALL 
+SELECT review AS content FROM review WHERE id = '$userID')
