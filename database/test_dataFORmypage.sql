@@ -113,7 +113,6 @@ INSERT INTO `events_calendar`.`participants` (`user_id`, `event_id`) VALUES ('1'
 INSERT INTO `events_calendar`.`participants` (`user_id`, `event_id`) VALUES ('1', '12');
 INSERT INTO `events_calendar`.`participants` (`user_id`, `event_id`) VALUES ('1', '13');
 INSERT INTO `events_calendar`.`participants` (`user_id`, `event_id`) VALUES ('1', '14');
-INSERT INTO `events_calendar`.`participants` (`user_id`, `event_id`) VALUES ('1', '15');
 
 -- review
 INSERT INTO `events_calendar`.`review` (`event_id`, `author`, `review`, `score`)
