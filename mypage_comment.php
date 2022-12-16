@@ -1,8 +1,9 @@
 <?php
-$mysqli = new mysqli('localhost:3306','root','rootroot','events_calendar') or die(mysqli_error($mysqli));
+include_once 'db.php';
+//$mysqli = new mysqli('localhost:3306','root','rootroot','events_calendar') or die(mysqli_error($mysqli));
 error_reporting( E_ALL );
   ini_set( "display_errors", 1 );
-
+ $_SESSION['id'] = 1;
   if(!isset($_SESSION['id'])){
     echo "<script>alert('로그인 하세요.');
     history.back();</script>";
@@ -122,7 +123,7 @@ form{
 <body>
 <section>
     <?php
-    $sql = "SELECT*FROM(
+    $sql = "(
     SELECT content AS content FROM post WHERE id = '$userID' 
     UNION ALL 
     SELECT review AS content FROM review WHERE id = '$userID')";
@@ -132,11 +133,12 @@ form{
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12 pb-4">
                 <h1>Comments</h1>
-                <?php while($row = mysql_fetch_array($result))
+                <?php while($row = sql_fetch_array($result)){
                 ?>
                 <div class="comment mt-4 text-justify float-left">
                     <p><?php $row['content']; ?></p>
                 </div>
+                <?php } ?>
                   <?php mysql_close($con);?>
                 </div>
             </div>
