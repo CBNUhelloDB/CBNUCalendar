@@ -2,9 +2,13 @@
 $mysqli = new mysqli('localhost:3306','root','rootroot','events_calendar') or die(mysqli_error($mysqli));
 error_reporting( E_ALL );
   ini_set( "display_errors", 1 );
+
   if(!isset($_SESSION['id'])){
     echo "<script>alert('로그인 하세요.');
     history.back();</script>";
+  }
+  else {
+    $userID = $_SESSION['id'];
   }
 ?>
 
@@ -118,8 +122,12 @@ form{
 <body>
 <section>
     <?php
-    $sql = ("SELECT content AS content FROM post WHERE id = $_SESSION['id'] UNION SELECT review AS content FROM review WHERE id = $_SESSION['id']");
-    $result = $conn->query($sql); ?>
+    $sql = "SELECT*FROM(
+    SELECT content AS content FROM post WHERE id = '$userID' 
+    UNION ALL 
+    SELECT review AS content FROM review WHERE id = '$userID')";
+    $result = $conn->query($sql); 
+    ?>
     <div class="container">
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12 pb-4">
