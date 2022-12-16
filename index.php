@@ -132,13 +132,14 @@ $result = $conn->query($sql);
       //editable: true,
       //eventLimit: true, // allow "more" link when too many events
 	  events: [
-        {
-          groupId: 777,
-          title: 'testEvent',
-          start: '2022-12-01',
-          url: 'http://google.com/'
-        },
-        
+        <?php while($row = mysqli_fetch_array($result)){?>
+          {
+            groupId: <?php echo $row['id'];?>,
+            title: "<?php echo $row['name']; ?>",
+            start: "<?php echo $row['date']; ?>",
+            url: '',
+          },
+        <?php } ?>
       ]
     });
 
