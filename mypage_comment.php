@@ -3,7 +3,7 @@ include_once 'db.php';
 //$mysqli = new mysqli('localhost:3306','root','rootroot','events_calendar') or die(mysqli_error($mysqli));
 error_reporting( E_ALL );
   ini_set( "display_errors", 1 );
- $_SESSION['id'] = 1;
+ //$_SESSION['id'] = 1;
   if(!isset($_SESSION['id'])){
     echo "<script>alert('로그인 하세요.');
     history.back();</script>";
@@ -133,17 +133,17 @@ form{
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12 pb-4">
                 <h1>Comments</h1>
-                <?php while($row = sql_fetch_array($result)){
+                <?php while($row = mysqli_fetch_array($result)){
                 ?>
                 <div class="comment mt-4 text-justify float-left">
-                    <p><?php $row['content']; ?></p>
+                    <p><?php echo $row['content']; ?></p>
                 </div>
-                <?php } ?>
-                  <?php mysql_close($con);?>
+                <?php } ?> 
                 </div>
             </div>
           </div>
         </div>
+        <?php mysqli_close($conn);?>
 </section>
 </body>
 </html>
