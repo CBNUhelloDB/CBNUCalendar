@@ -4,7 +4,7 @@ $username = "root";
 $password = "rootroot";
 
 // Create connection
-$conn = new mysqli($servername, $username, $password);
+$conn = new mysqli($servername, $username, $password,"events_calendar");
 
 // Check connection
 if($conn->connect_error){

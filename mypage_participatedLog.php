@@ -1,15 +1,24 @@
 <?php
-$mysqli = new mysqli('localhost:3306','root','rootroot','events_calendar') or die(mysqli_error($mysqli));
+//$mysqli = new mysqli('localhost:3306','root','rootroot','events_calendar') or die(mysqli_error($mysqli));
+include_once 'db.php';
 error_reporting( E_ALL );
   ini_set( "display_errors", 1 );
+  //$_SESSION['id'] = 1;
+  if(!isset($_SESSION['id'])){
+    echo "<script>alert('로그인 하세요.');
+    history.back();</script>";
+  }
+  else {
+    $userID = $_SESSION['id'];
+  }
 
  $months = array();
  $months[0] = 0;
  $i = 1;
 
  $sql = "SELECT CONCAT(YEAR(event.date),'-',MONTH(event.date)) AS d, Count(*) c
-        FROM event.participants
-        WHERE id.event = event_id.participants AND YEAR(event.date) = 2022
+        FROM event, participants
+        WHERE event.id = participants.event_id AND YEAR(event.date) = 2022 AND participants.user_id = $userID
         GROUP BY d
         ";
  $result = $conn->query($sql); 

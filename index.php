@@ -1,5 +1,6 @@
 <?php
-$mysqli = new mysqli('localhost:3306','root','rootroot','events_calendar') or die(mysqli_error($mysqli));
+include_once 'db.php';
+//$mysqli = new mysqli('localhost:3306','root','rootroot','events_calendar') or die(mysqli_error($mysqli));
 error_reporting( E_ALL );
 ini_set( "display_errors", 1 );
 
