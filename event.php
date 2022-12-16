@@ -125,7 +125,7 @@
 										<li><a href=<?php echo 'location.php?id='.$locid; ?> class="button big">About Location</a></li>
 									</ul>
 									<ul class="actions">
-										<li><a href="participateMember.php" class="button big">Reservation status</a></li>
+										<li><a href="participateMember.php?id=<?php echo $event_id;?>" class="button big">Reservation status</a></li>
 									</ul>
 								</div>
 								<span class="image object">

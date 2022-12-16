@@ -75,20 +75,19 @@
 		<?php
 			include_once 'dbconfig.php';
 			$dbname = "events_calendar";
+			$event_id = $_GET['id'];
 			mysqli_select_db($conn, $dbname) or die('DB selection failed');
 			$sql = "
-			SELECT u.full_name name, u.department dep, e.date
-			FROM participants AS p, user AS u, event AS e
-			WHERE e.id = 1
-			AND e.id = p.event_id
-			AND p.user_id = u.id
+			SELECT *
+			FROM participate_member
+			WHERE eid = $event_id
 			";
 			$result = $conn->query($sql);
 			?>
 		<!-- Wrapper -->
 			<div id="ReservationList">
 				<h1>Reservation List</h1>
-				<a href="event.php" class="button big" style = "float:right">Back to Event</a>
+				<a href="event.php?id=<?php echo $event_id; ?>" class="button big" style = "float:right">Back to Event</a>
 				<table>
 					<tr>
 						<th>Name</th>
@@ -98,9 +97,9 @@
 					<?php
 					while($row = mysqli_fetch_array($result)) {
 					echo '<tr>';
-					echo '<td>' .$row["name"].'</td>';
-					echo '<td>' .$row["dep"].'</td>';
-					echo '<td>' .$row["date"].'</td>';
+					echo '<td>' .$row["uname"].'</td>';
+					echo '<td>' .$row["dept"].'</td>';
+					echo '<td>' .$row["edate"].'</td>';
 					echo '</tr>';
 					} ?>
 			</div>
