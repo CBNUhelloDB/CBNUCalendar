@@ -123,10 +123,9 @@
 								$dbname = "events_calendar";
 								mysqli_select_db($conn, $dbname) or die('DB selection failed');
 								$sql = "
-								SELECT event.name, event.date, event.id
-								FROM event, host
-								WHERE host.club_id = $club_id
-								AND host.event_id = event.id
+								SELECT *
+								FROM clubHostEvent
+								WHERE cid = $club_id
 								";
 								$result = $conn->query($sql);
 							?>
@@ -138,11 +137,11 @@
 										<?php
 										while($row = mysqli_fetch_array($result)) {
 											echo '<article>';
-											echo '<a href ="./event.php?id='.$row["id"].'">';
-											echo '<span class="image object"><img src="images/event'.$row["id"].'.png" alt="" style="width:100px; height:100px;"/></span>';
+											echo '<a href ="./event.php?id='.$row["cid"].'">';
+											echo '<span class="image object"><img src="images/event'.$row["cid"].'.png" alt="" style="width:100px; height:100px;"/></span>';
 											echo '<div class="content">';
-											echo '<h3>'.$row["name"].'</h3>';
-											echo '<p>'.$row["date"].'</p>';
+											echo '<h3>'.$row["ename"].'</h3>';
+											echo '<p>'.$row["edate"].'</p>';
 											echo '</div>';
 											echo '</a>';
 											echo '</article>';	
