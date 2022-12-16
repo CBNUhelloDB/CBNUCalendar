@@ -1,3 +1,8 @@
+<?php
+$mysqli = new mysqli('localhost:3306','root','rootroot','events_calendar') or die(mysqli_error($mysqli));
+error_reporting( E_ALL );
+ini_set( "display_errors", 1 );
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -21,9 +26,11 @@
     <!-- Style -->
     <link rel="stylesheet" href="css/style.css">
 
+
     <title>Calendar #10</title>
   </head>
   <body>
+  <header>
   <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
     <a class="navbar-brand" href="#">CBNU Events Calendar</a>
     <button class="navbar-toggler" type="button" data-toggle="colla	pse" data-target="#navbarSupportedContent"
@@ -70,6 +77,7 @@
           </div>
         </li>
       </ul>
+  
       <!-- 
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -78,10 +86,11 @@
             -->
     </div>
   </nav>
+</header>
   
   
-
-  <div id='calendar-container'>
+  <!-- <div style='min-height:100px; width:100px; clear:both' ></div> -->
+  <div id='calendar-container' style='margin-top:4em;'>
     <div id='calendar'></div>
   </div>
     
@@ -114,9 +123,9 @@
       },
       defaultView: 'dayGridMonth',
       defaultDate: '2022-12-07',
-      navLinks: true, // can click day/week names to navigate views
-      editable: true,
-      eventLimit: true, // allow "more" link when too many events
+      //navLinks: true, // can click day/week names to navigate views
+      //editable: true,
+      //eventLimit: true, // allow "more" link when too many events
 	  events: [
         {
           groupId: 777,
