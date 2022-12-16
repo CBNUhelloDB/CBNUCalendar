@@ -1,15 +1,23 @@
-<!doctype html>
-<head>
-  <title>Club List</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-</head>
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>CLub Members</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	</head>
+	<body class="is-preload">
 
-<body>
-<!-- Club header section -->
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+		<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
 	    <a class="navbar-brand" href="#">CBNU Events Calendar</a>
 	    <button class="navbar-toggler" type="button" data-toggle="colla	pse" data-target="#navbarSupportedContent"
 	      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,31 +71,45 @@
 	            -->
 	    </div>
 	  </nav>
-  <div class="list-group">
-    
-<?php
-	include_once 'dbconfig.php';
-	$dbname = "events_calendar";
-	mysqli_select_db($conn, $dbname) or die('DB selection failed');
+		<?php
+			include_once 'dbconfig.php';
+			$dbname = "events_calendar";
+			$club_id = $_GET['id'];
+			mysqli_select_db($conn, $dbname) or die('DB selection failed');
+			$sql = "
+			SELECT u.full_name name, u.department depm, m.join_date
+			FROM club_member AS m, user AS u
+			WHERE m.club_id = $club_id
+			AND u.id = m.user_id
+			";
+			$result = $conn->query($sql);
+			?>
+		<!-- Wrapper -->
+			<div id="ReservationList">
+				<h1>Club Member List</h1>
+				<a href="club.php?id=<?php echo $club_id;?>" class="button big" style = "float:right">Back to Club</a>
+				<table>
+					<tr>
+						<th>Name</th>
+						<th>Department</th>
+						<th>Join Date</th>
+					</tr>
+					<?php
+					while($row = mysqli_fetch_array($result)) {
+					echo '<tr>';
+					echo '<td>' .$row["name"].'</td>';
+					echo '<td>' .$row["depm"].'</td>';
+					echo '<td>' .$row["join_date"].'</td>';
+					echo '</tr>';
+					} ?>
+			</div>
 
-	$sql = "
-		SELECT c.id id, c.name name, u.full_name manager, c.open_date od
-		FROM club AS c, user AS u
-		WHERE c.manager_id = u.id
-		ORDER BY c.id
-	";
-	$result = $conn->query($sql);
-	while($row = mysqli_fetch_array($result)) {
-	echo '<a href="./club.php?id='.$row["id"].'" class="list-group-item list-group-item-action flex-column align-items-start">';
-	echo '<div>';
-	echo '<h5> Club No. ' . $row["id"] . '</h5>';
-	echo '<h5><strong>' . $row["name"] . '</strong></h5>';
-	echo '<h5>Manager : '.$row["manager"].'</h5>';
-	echo '<h6>Open Date : '.$row["od"].'</h6>';
-	echo '</div>';	
-	}
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
 
-mysqli_close($conn);
-?>       
-
-</body>
+	</body>
+</html>

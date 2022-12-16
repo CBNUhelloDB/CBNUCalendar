@@ -108,7 +108,7 @@ span.psw {
 	            My page
 	          </a>
 	          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-	            <a class="dropdown-item" href="./mypage_participatedLog">My profile</a>
+	            <a class="dropdown-item" href="./mypage_participatedLog.html">My profile</a>
 	            <a class="dropdown-item" href="./mypage_comment.html">My comments</a>
 	            <a class="dropdown-item" href="#">Logout</a>
 	          </div>

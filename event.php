@@ -57,7 +57,7 @@
 	            My page
 	          </a>
 	          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-	            <a class="dropdown-item" href="./mypage_participatedLog">My profile</a>
+	            <a class="dropdown-item" href="./mypage_participatedLog.html">My profile</a>
 	            <a class="dropdown-item" href="./mypage_comment.html">My comments</a>
 	            <a class="dropdown-item" href="#">Logout</a>
 	          </div>
@@ -129,7 +129,7 @@
 									</ul>
 								</div>
 								<span class="image object">
-									<img src="images/pic13.jpg" alt="" style="width:328px; height:466px;"/>
+									<img src="images/event<?php echo $event_id; ?>.png" alt="" style="width:500px; height:500px;"/>
 								</span>
 							</section>
 							<!-- Section -->
@@ -154,7 +154,7 @@
 											if($eid != $event_id) {
 												echo '<article>';
 												echo '<a href ="#">';
-												echo '<span class="image object"><img src="images/pic06.jpg" alt="" style="width:82px; height:116px;"/></span>';
+												echo '<span class="image object"><img src="images/event'.$row["id"].'.png" alt="" style="width:82px; height:116px;"/></span>';
 												echo '<div class="content">';
 												echo '<h3>'.$row["name"].'</h3>';
 												echo '<p>';
