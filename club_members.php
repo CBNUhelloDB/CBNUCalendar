@@ -78,10 +78,9 @@
 			$club_id = $_GET['id'];
 			mysqli_select_db($conn, $dbname) or die('DB selection failed');
 			$sql = "
-			SELECT u.full_name name, u.department depm, m.join_date
-			FROM club_member AS m, user AS u
-			WHERE m.club_id = $club_id
-			AND u.id = m.user_id
+			SELECT *
+			FROM club_member_list
+			WHERE cid = $club_id
 			";
 			$result = $conn->query($sql);
 			?>
@@ -99,7 +98,7 @@
 					while($row = mysqli_fetch_array($result)) {
 					echo '<tr>';
 					echo '<td>' .$row["name"].'</td>';
-					echo '<td>' .$row["depm"].'</td>';
+					echo '<td>' .$row["dept"].'</td>';
 					echo '<td>' .$row["join_date"].'</td>';
 					echo '</tr>';
 					} ?>
