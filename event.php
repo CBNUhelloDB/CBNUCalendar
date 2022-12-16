@@ -92,7 +92,7 @@
 									AND e.id = r.event_id
 									AND e.location_id = l.id
 									";
-									$sql2 = " SELECT c.name cname, u.full_name uname, u.email email
+									$sql2 = " SELECT c.name cname, u.full_name uname, u.email email, c.id id
 									FROM event AS e, user AS u, club AS c, host AS h
 									WHERE e.id = $event_id
 									AND e.id = h.event_id
@@ -105,9 +105,9 @@
 									$row = mysqli_fetch_array($result);
 									$locid = $row["lid"];
 									echo '<header>';
-									echo '<h1>'.$row["name"].'</h1>';
+									echo '<h1>'.$row["name"].'</h1><br>';
 									while($row2 = mysqli_fetch_array($result2)) {
-										echo '<p>'.$row2["cname"].'</p>';
+										echo '<a href= "./club.php?id='.$row2["id"].'"><p>'.$row2["cname"].'</p></a>';
 									}
 									echo '</header>';
 									echo '<p>Location : '.$row["lname"].'<br><br>';
@@ -122,7 +122,6 @@
 									?>
 									<ul class="actions">
 										<li><a href=<?php echo 'location.php?id='.$locid; ?> class="button big">About Location</a></li>
-										<li><a href="#" class="button big">About Club</a></li>
 									</ul>
 									<ul class="actions">
 										<li><a href="participateMember.php" class="button big">Reservation status</a></li>
@@ -153,7 +152,7 @@
 											$eid = $row["id"];
 											if($eid != $event_id) {
 												echo '<article>';
-												echo '<a href ="#">';
+												echo '<a href ="./event.php?id='.$row["id"].'">';
 												echo '<span class="image object"><img src="images/event'.$row["id"].'.png" alt="" style="width:82px; height:116px;"/></span>';
 												echo '<div class="content">';
 												echo '<h3>'.$row["name"].'</h3>';

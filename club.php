@@ -137,7 +137,7 @@
 										<?php
 										while($row = mysqli_fetch_array($result)) {
 											echo '<article>';
-											echo '<a href ="#">';
+											echo '<a href ="./event.php?id='.$row["id"].'">';
 											echo '<span class="image object"><img src="images/event'.$row["id"].'.png" alt="" style="width:100px; height:100px;"/></span>';
 											echo '<div class="content">';
 											echo '<h3>'.$row["name"].'</h3>';
