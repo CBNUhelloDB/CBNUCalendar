@@ -52,7 +52,8 @@
 	          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 	            <a class="dropdown-item" href="./mypage_participatedLog.html">My profile</a>
 	            <a class="dropdown-item" href="./mypage_comment.html">My comments</a>
-	            <a class="dropdown-item" href="#">Logout</a>
+	            <a class="dropdown-item" href="./log_in.php">Login</a>
+				<a class="dropdown-item" href="./sign_in.php">Sign Up</a>
 	          </div>
 	        </li>
 	      </ul>
