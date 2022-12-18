@@ -1,3 +1,25 @@
+<?php 
+include_once "./db.php";
+require_once 'club_update.php';
+error_reporting( E_ALL );
+  ini_set( "display_errors", 1 );
+if(!isset($_SESSION['ID'])){
+    $UID = 0;
+  }
+  else {
+	$UID = $_SESSION['ID'];
+  }
+
+if (isset($_GET['edit'])){
+	$edit = 1;
+	$club_id = $_GET['edit'];
+}else 
+{
+	$edit = 0;
+	$club_id = $_GET['id'];
+}
+
+?>
 <!DOCTYPE HTML>
 <!--
 	Editorial by HTML5 UP
@@ -83,9 +105,9 @@
 							<section id="banner">
 								<div class="content">
 								<?php
-									include_once 'dbconfig.php';
+									//include_once 'dbconfig.php';
 									$dbname = "events_calendar";
-									$club_id = $_GET['id'];
+									//$club_id = $_GET['id'];
 									mysqli_select_db($conn, $dbname) or die('DB selection failed');
 									$sql = " SELECT *
 									FROM club
@@ -100,8 +122,18 @@
 									$result2 = $conn->query($sql2);
 									$row = mysqli_fetch_array($result);
 									$row2 = mysqli_fetch_array($result2);
+									$name = $row["name"];
 									echo '<header>';
+									if ($edit == 1) {
+										echo '<form action="club_update.php" method = "POST">';
+
+										echo '<input type = "text" name = "name" value="'.$name.'">';
+										echo '<input type = "hidden" name = "club_id" value="'.$club_id.'">';
+
+										
+									}else {
 									echo '<h1>'.$row["name"].'</h1>';
+									}
 									echo '</header>';
 									echo 'Manager : '.$row2["name"].'<br><br>';
 									echo '<p>Open date : '.$row["open_date"].'<br><br>';
@@ -112,6 +144,17 @@
 									<ul class="actions">
 										<li><a href=<?php echo 'club_members.php?id='.$club_id; ?> class="button big">Club Members</a></li>
 									</ul>
+									<?php if ($UID == $row['manager_id'] && $edit == 0) { ?>
+									<ul class="actions">
+										<li><a href="club.php?edit=<?php echo $row['id']; ?>" button class="button big" type = "submit" name = "edit">EDIT</a></li>
+									</ul>
+									<?php } ?>
+									<?php if ($edit == 1) { ?>
+									<ul class="actions">
+										<li><button class="button big" type = "submit" name = "update">UPDATE</a></li>
+									</form>
+									</ul>
+									<?php } ?>
 								</div>
 								<span class="image object">
 									<img src="images/club<?php echo $club_id;?>.png" alt="" style="width:500px; height:500px;"/>

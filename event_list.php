@@ -71,6 +71,14 @@
 	include_once 'dbconfig.php';
 	$dbname = "events_calendar";
 	mysqli_select_db($conn, $dbname) or die('DB selection failed');
+	if(isset($_GET['delete'])){
+		$eid=$_GET['delete'];
+		$sql="DELETE FROM event WHERE id=$eid";
+		$result = $conn->query($sql);
+	
+		
+		header("location:event_list.php");
+	}
 
 	$sql = "
 		SELECT id, name, date
@@ -81,6 +89,7 @@
 	while($row = mysqli_fetch_array($result)) {
 	echo '<a href="./event.php?id='.$row["id"].'" class="list-group-item list-group-item-action flex-column align-items-start">';
 	echo '<div class="d-flex w-100 justify-content-between">';
+	
 	echo '<h5 class="mb-1">' . $row["name"] . '</h5><br>';
 	echo '</div>';	
 	
@@ -100,6 +109,7 @@
 		echo $row2["cname"].'&nbsp&nbsp&nbsp';
 	}
 	echo '</h5></div>';
+	echo '<a href="event_list.php?delete='.$eid.'"class="btn">DELETE</a>';
 	}
 
 mysqli_close($conn);

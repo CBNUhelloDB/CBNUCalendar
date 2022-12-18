@@ -108,8 +108,8 @@ span.psw {
 	            My page
 	          </a>
 	          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-	            <a class="dropdown-item" href="./mypage_participatedLog.html">My profile</a>
-	            <a class="dropdown-item" href="./mypage_comment.html">My comments</a>
+	            <a class="dropdown-item" href="./mypage_participatedLog.php">My profile</a>
+	            <a class="dropdown-item" href="./mypage_comment.php">My comments</a>
 	            <a class="dropdown-item" href="./log_in.php">Login</a>
 				<a class="dropdown-item" href="./sign_in.php">Sign Up</a>
 	          </div>

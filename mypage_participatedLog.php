@@ -4,17 +4,32 @@ include_once 'db.php';
 error_reporting( E_ALL );
   ini_set( "display_errors", 1 );
   //$_SESSION['id'] = 1;
-  if(!isset($_SESSION['id'])){
+  if(!isset($_SESSION['ID'])){
     echo "<script>alert('로그인 하세요.');
     history.back();</script>";
   }
   else {
-    $userID = $_SESSION['id'];
+    $userID = $_SESSION['ID'];
   }
 
  $months = array();
  $months[0] = 0;
+ $months[1] = 0;
+ $months[2] = 0;
+ $months[3] = 0;
+ $months[4] = 0;
+ $months[5] = 0;
+ $months[6] = 0;
+ $months[7] = 0;
+ $months[8] = 0;
+ $months[9] = 0;
+ $months[10] = 0;
+ $months[11] = 0;
+ $months[12] = 0;
+
+
  $i = 1;
+ 
 
  $sql = "SELECT CONCAT(YEAR(event.date),'-',MONTH(event.date)) AS d, Count(*) c
         FROM event, participants

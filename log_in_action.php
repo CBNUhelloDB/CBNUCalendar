@@ -2,7 +2,7 @@
 <?php
 	session_start();
 
-	$mysqli=new mysqli('localhost:3306','root','root','events_calendar') or die(mysqli_error($mysqli));
+	$mysqli=new mysqli('localhost:3306','root','rootroot','events_calendar') or die(mysqli_error($mysqli));
 
 
 	error_reporting(E_ALL);
@@ -22,7 +22,7 @@
 		
 		if($row['password'] == $password)
 		{
-			$_SESSION["id"]=$id;
+			$_SESSION["ID"]=$id;
 			echo "<script>alert('로그인되었습니다.'); location.href='./index.php';</script>";
 		}
 		else{

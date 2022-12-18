@@ -61,7 +61,7 @@ CREATE TABLE host( -- club and event
     club_id INT NOT NULL,
     event_id INT NOT NULL,
     FOREIGN KEY (club_id) REFERENCES club(id),
-    FOREIGN KEY (event_id) REFERENCES event(id),
+    FOREIGN KEY (event_id) REFERENCES event(id) ON DELETE CASCADE,
     PRIMARY KEY (club_id, event_id)
 ); 
 
@@ -71,7 +71,7 @@ CREATE TABLE participants( -- user and event
     event_id INT NOT NULL,
     PRIMARY KEY (user_id, event_id),
     FOREIGN KEY (user_id) REFERENCES user(id),
-    FOREIGN KEY (event_id) REFERENCES event(id)
+    FOREIGN KEY (event_id) REFERENCES event(id) ON DELETE CASCADE
 );
 
 -- 6
@@ -82,7 +82,7 @@ CREATE TABLE review(
     review TEXT,
     score ENUM('very bad', 'bad', 'neutral', 'good', 'very good'),
     PRIMARY KEY (id, event_id),
-    FOREIGN KEY (event_id) REFERENCES event(id),
+    FOREIGN KEY (event_id) REFERENCES event(id) ON DELETE CASCADE,
     FOREIGN KEY (author) REFERENCES user(id)
 );
 

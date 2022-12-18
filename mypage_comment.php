@@ -4,12 +4,12 @@ include_once 'db.php';
 error_reporting( E_ALL );
   ini_set( "display_errors", 1 );
  //$_SESSION['id'] = 1;
-  if(!isset($_SESSION['id'])){
+  if(!isset($_SESSION['ID'])){
     echo "<script>alert('로그인 하세요.');
     history.back();</script>";
   }
   else {
-    $userID = $_SESSION['id'];
+    $userID = $_SESSION['ID'];
   }
 ?>
 
@@ -121,6 +121,7 @@ form{
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </header>
 <body>
+    
 <section>
     <?php
     $sql = "(
@@ -138,9 +139,9 @@ form{
                 <div class="comment mt-4 text-justify float-left">
                     <p><?php echo $row['content']; ?></p>
                 </div>
-                <?php } ?> 
-                </div>
+                </div>     
             </div>
+            <?php } ?> 
           </div>
         </div>
         <?php mysqli_close($conn);?>
