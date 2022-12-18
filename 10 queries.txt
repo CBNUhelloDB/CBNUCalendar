@@ -51,8 +51,17 @@ INSERT INTO user (id,email,password,full_name,birthdate,grade,department)
 VALUES('$id','$email','$password','$name','$birthday','$grade','$department')
 
 8. COUNT&JOIN query
+
 SELECT COUNT(*) as count_user
 FROM user
 JOIN user_and_community
 ON user.id = user_and_community.user_id
 WHERE community_id = 1
+
+9. DELETE query
+
+DELETE FROM event WHERE id=$eid
+
+10. UPDATE query
+
+UPDATE club SET name='$name' WHERE id='$club_id'
