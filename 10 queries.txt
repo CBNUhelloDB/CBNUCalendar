@@ -50,3 +50,9 @@ SELECT review AS content FROM review WHERE id = '$userID'
 INSERT INTO user (id,email,password,full_name,birthdate,grade,department) 
 VALUES('$id','$email','$password','$name','$birthday','$grade','$department')
 
+8. COUNT&JOIN query
+SELECT COUNT(*) as count_user
+FROM user
+JOIN user_and_community
+ON user.id = user_and_community.user_id
+WHERE community_id = 1
